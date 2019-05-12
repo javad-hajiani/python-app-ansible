@@ -1,0 +1,37 @@
+---
+# tasks file for uwsgi-config
+- name: Install base packages
+  apt:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - uwsgi
+    - uwsgi-plugin-python
+  tags: packages
+
+- name: change recursive permission of directory in ansible
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ app_user }}"
+    group: "{{ app_user }}"
+    mode: 0775
+    recurse: yes
+  with_items:
+    - /run/uwsgi/
+    - /var/log/uwsgi/
+
+- name: app uwsgi config
+  template:
+    src: uwsgi.j2
+    dest: /etc/uwsgi/apps-enabled/{{ application_name }}.ini
+  tags:
+    - config
+
+- name: uwsgi daemon config
+  template:
+    src: uwsgi-service.j2
+    dest: /etc/systemd/system/uwsgi-custom.service
+  tags:
+    - config
+  notify: restart uwsgi

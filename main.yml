@@ -1,0 +1,23 @@
+---
+# Maintainer Javad Hajiani javad.8558@gmail.com
+- hosts: Rakuten
+  sudo: yes
+  roles:
+    - requirements
+    - nginx-config
+    - uwsgi-config
+    - app-config
+  vars:
+    - update_apt_cache: yes
+    - application_name: devopschallenge
+    
+    # Application Variables
+    - app_root: '/webapps/devops/{{ application_name }}'
+    - app_user: 'Rakuten'
+    - virtualenv_path: '{{ git_root }}/venv'
+    - python_version: 'python2.7.9'
+    - requirements_file: '{{ git_root }}/requirements.txt'
+    # Git Variables
+    - git_repo: 'https://bitbucket.org/azneita/devops-challenge.git'
+    - git_branch: 'master'
+    - git_root: '{{ app_root }}'

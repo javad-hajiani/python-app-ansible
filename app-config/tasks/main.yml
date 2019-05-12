@@ -1,0 +1,25 @@
+---
+# tasks file for app-config
+- name: Remove base directory (if present)
+  file:
+    path: '{{ app_root }}'
+    state: absent
+
+
+- name: Clone Git repository
+  git:
+    repo: '{{ git_repo }}'
+    dest: '{{ git_root }}'
+    version: '{{ git_branch }}'
+
+- name: Initiate virtualenv
+  pip: virtualenv="{{ virtualenv_path }}" 
+       requirements={{ app_root }}/requirements.txt
+
+- name: Set permissions for base directory
+  file:
+    path: '{{ app_root }}'
+    owner: '{{ app_user }}'
+    group: '{{ app_user }}'
+    state: directory
+    recurse: yes

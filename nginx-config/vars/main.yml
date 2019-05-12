@@ -1,0 +1,4 @@
+---
+# vars file for nginx-config
+nginx_error_log: '/var/log/error.log'
+server_port: '80'

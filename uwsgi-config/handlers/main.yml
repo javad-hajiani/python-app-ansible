@@ -1,0 +1,6 @@
+---
+# handlers file for uwsgi-config
+- name: restart uwsgi
+  service:
+    name: uwsgi-custom
+    state: restarted

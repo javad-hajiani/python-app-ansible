@@ -1,0 +1,25 @@
+---
+# tasks file for nginx-config
+- name: install nginx package
+  apt:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - nginx
+  tags:
+    - nginx
+
+- name: remove nginx default config
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+  tags:
+    - nginxconfig
+
+- name: install app nginx config
+  template:
+    src: nginx.j2
+    dest: /etc/nginx/sites-enabled/{{ application_name }}.conf
+  tags:
+    - config
+  notify: restart nginx

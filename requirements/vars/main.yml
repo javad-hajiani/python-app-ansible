@@ -1,0 +1,3 @@
+---
+# vars file for requirements
+update_apt_cache: 'yes'

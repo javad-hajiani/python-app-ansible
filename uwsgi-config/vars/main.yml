@@ -1,0 +1,5 @@
+---
+# vars file for uwsgi-config
+uwsgi_processes: 1
+uwsgi_threads: 1
+uwsgi_env: []

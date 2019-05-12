@@ -1,0 +1,18 @@
+[uwsgi]
+master=true
+socket = 127.0.0.1:5000
+chmod-socket = 775
+uid= {{ app_user }}
+gid= {{ app_user }}
+pidfile=/run/uwsgi/pid
+chdir = {{ app_root }}
+wsgi-file=app.py
+callable=app
+virtualenv={{ virtualenv_path }}
+processes= {{ ansible_processor_vcpus }}
+vacuum=true
+disable-logging=false
+log-5xx=true
+log-4xx=true
+log-ioerror=true
+plugin = python
